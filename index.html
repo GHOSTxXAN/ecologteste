@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoLog - Descarte Consciente</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos Gerais */
+        body {
+            margin: 0;
+            font-family: 'Merriweather', serif;
+            background-color: #F0F0F0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Cabeçalho */
+        .header {
+            background-color: #222;
+            color: #F0F0F0;
+            padding: 80px 0;
+            text-align: center;
+            border-bottom: 5px solid #555;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .header .video-background video {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+        }
+
+        .header h1, .header p {
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            font-style: italic;
+        }
+
+        /* Conteúdo Principal */
+        .main-content {
+            padding: 40px 0;
+        }
+
+        /* Seções */
+        .video-section, .tips-section, .map-section {
+            background-color: #FFF;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .video-section h2, .tips-section h2, .map-section h2 {
+            color: #222;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 2px solid #EEE;
+            padding-bottom: 10px;
+        }
+        
+        /* Estilo para o vídeo principal */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 16 / 9;
+            background-color: #DDD;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Estilo das Dicas (Cartões Resumidos) */
+        .tips-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .tip-card {
+            background-color: #F8F8F8;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #EEE;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+        }
+
+        .tip-card:hover {
+            background-color: #EFEFEF;
+        }
+
+        .tip-card h3 {
+            color: #333;
+            margin-top: 10px;
+            font-size: 1.2em;
+            border-bottom: 1px dashed #DDD;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .tip-card p {
+            font-size: 0.95em;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .tip-card .read-more-prompt {
+            text-align: center;
+            font-style: italic;
+            color: #555;
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px dashed #DDD;
+            font-size: 0.85em;
+        }
+
+        .tip-card img {
+            max-width: 80px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        /* Seção de mapas e botão */
+        .map-section {
+            text-align: center;
+        }
+
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .map-container {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 350px;
+            border: none;
+            display: block;
+        }
+
+        .find-button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+        }
+
+        .find-button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        /* Modal de Dicas Detalhadas */
+        .detail-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .detail-modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .detail-modal-content {
+            background-color: #FFF;
+            padding: 30px;
+            border-radius: 8px;
+            position: relative;
+            max-width: 1000px; /* Aumentado */
+            max-height: 90%;
+            overflow-y: auto;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .detail-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 2.5em;
+            color: #888;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            line-height: 1;
+            transition: color 0.2s ease;
+        }
+
+        .detail-modal-close:hover {
+            color: #333;
+        }
+
+        .detail-modal-content h3 {
+            color: #222;
+            font-size: 2em;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #EEE;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
+        .detail-modal-text p {
+            margin-bottom: 15px;
+            color: #444;
+            font-size: 1em;
+        }
+
+        .detail-modal-text strong {
+            color: #333;
+        }
+        
+        /* Estilo para o vídeo dentro do modal */
+        .detail-modal-player {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            min-height: 450px; /* Adicionado para garantir o tamanho mínimo */
+            margin-bottom: 20px;
+        }
+        
+        .detail-modal-player iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Rodapé */
+        .footer {
+            background-color: #222;
+            color: #888;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.9em;
+            border-top: 5px solid #555;
+        }
+
+        /* --- Responsividade Aprimorada com Media Queries --- */
+        @media (max-width: 600px) {
+            .container { padding: 10px; }
+            .header { padding: 60px 0; }
+            .header h1 { font-size: 2.2em; }
+            .header p { font-size: 1em; }
+            .video-section, .tips-section, .map-section { padding: 20px; }
+            .video-section h2, .tips-section h2, .map-section h2 { font-size: 1.8em; margin-bottom: 15px; }
+            .detail-modal-content { max-width: 95%; padding: 20px; }
+            .detail-modal-close { font-size: 1.8em; top: 5px; right: 10px; }
+            .detail-modal-content h3 { font-size: 1.6em; }
+            .detail-modal-text p, .detail-modal-text ul { font-size: 0.9em; }
+        }
+        @media (min-width: 601px) and (max-width: 991px) {
+            .container { padding: 15px; }
+            .header { padding: 70px 0; }
+            .header h1 { font-size: 2.8em; }
+            .header p { font-size: 1.1em; }
+            .video-section h2, .tips-section h2, .map-section h2 { font-size: 1.9em; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="video-background">
+            <video autoplay muted loop playsinline>
+                <source src="videos/mar.mp4" type="video/mp4">
+                Seu navegador não suporta a tag de vídeo.
+            </video>
+        </div>
+        <div class="container">
+            <h1>EcoLog</h1>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="video-section">
+                <h2>A catastrofe!</h2>
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/C7rJ4p3pWd4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </section>
+            
+            <section class="tips-section">
+                <h2>Dicas de Descarte Consciente</h2>
+                <div class="tips-content" id="tipsContent">
+                </div>
+            </section>
+
+            <section class="map-section">
+                <h2>Encontre Pontos de Descarte</h2>
+                <div class="map-grid">
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14690.358012327206!2d-44.31909549345268!3d-23.0021178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9c4f9fac48d1f7%3A0xb69ba0ad8017e732!2sJH%20Reciclagem%20Balne%C3%A1rio!5e0!3m2!1spt-BR!2sbr!4v1755796031477!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14697.13100933581!2d-44.40373034458008!3d-22.939811600000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9c4d3fa9ada51f%3A0x396a06e2cbe077c3!2sT%26S%20Reciclagem%20em%20geral!5e0!3m2!1spt-BR!2sbr!4v1755796937170!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14691.166048164187!2d-44.25630644458012!3d-22.994692900000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9c45708dd5022f%3A0x51e88aa547b155d4!2sReciclagem%20verolme!5e0!3m2!1spt-BR!2sbr!4v1755796644960!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58797.040035558886!2d-44.009409778320325!3d-22.92019339999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9c0f5aae8253ad%3A0xf41593c62da59ed0!2sRD%20Reciclagem%20Costa%20Verde!5e0!3m2!1spt-BR!2sbr!4v1757004169523!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7333.193996537963!2d-44.73289522229002!3d-23.221353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9d6d1f9f2c717d%3A0x5fed923ae05625da!2sSanta%20Clara%20Serv%20e%20Transportes%20de%20Parati!5e0!3m2!1spt-BR!2sbr!4v1757004344942!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29248.120568402766!2d-44.55502706113728!3d-23.012085220208927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9daf95fad89917%3A0xb86ff15eab09faa2!2sReciclagem%20Oliveira's!5e0!3m2!1spt-BR!2sbr!4v1757004433941!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 EcoRank. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <div class="detail-modal-overlay" id="detailModal">
+        <div class="detail-modal-content">
+            <button class="detail-modal-close">×</button>
+            <h3 id="modalTitle"></h3>
+            <div class="detail-modal-player">
+                <iframe id="modalPlayer" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div id="modalDescription" class="detail-modal-text">
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tipsContent = document.getElementById('tipsContent');
+            const detailModal = document.getElementById('detailModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalPlayer = document.getElementById('modalPlayer');
+            const modalDescription = document.getElementById('modalDescription');
+            const detailModalClose = document.querySelector('.detail-modal-close');
+            
+            // Dados das dicas, agora com o link do vídeo de cada uma
+            const tipsData = [
+                {
+                    material: 'Papel e Papelão',
+                    summary: 'Sara - Empresa X',
+                    image: 'imagens_dicas/papel-papelao.png',
+                    video: 'https://www.youtube.com/embed/S_B7_E662wQ'
+                },
+                {
+                    material: 'Plástico',
+                    summary: 'Felipe e Carlos - Empresa Y',
+                    image: 'imagens_dicas/plastico.png',
+                    video: 'https://www.youtube.com/embed/PONTO-FINAL-DO-VIDEO-DE-CADA-UM'
+                },
+                {
+                    material: 'Vidro',
+                    summary: 'Luiza e Kauane - Empresa Z',
+                    image: 'imagens_dicas/vidro.png',
+                    video: 'https://www.youtube.com/embed/rGfgkCmRNPM'
+                },
+                {
+                    material: 'Metal',
+                    summary: 'Kauane e Luiza - Empresa W',
+                    image: 'imagens_dicas/metal.png',
+                    video: 'https://www.youtube.com/embed/PONTO-FINAL-DO-VIDEO-DE-CADA-UM'
+                },
+                {
+                    material: 'Orgânicos',
+                    summary: 'Duda - Empresa K',
+                    image: 'imagens_dicas/organico.png',
+                    video: 'https://www.youtube.com/embed/PONTO-FINAL-DO-VIDEO-DE-CADA-UM'
+                },
+                {
+                    material: 'Pilhas e Baterias',
+                    summary: 'Emilly, Willian e Amanda - Empresa P',
+                    image: 'imagens_dicas/pilhas-baterias.png',
+                    video: 'https://www.youtube.com/embed/PONTO-FINAL-DO-VIDEO-DE-CADA-UM'
+                },
+                {
+                    material: 'Eletrônicos (E-lixo)',
+                    summary: 'Marcos e Brenda - Empresa J',
+                    image: 'imagens_dicas/eletronicos.png',
+                    video: 'https://www.youtube.com/embed/PONTO-FINAL-DO-VIDEO-DE-CADA-UM'
+                },
+                {
+                    material: 'Óleo de Cozinha Usado',
+                    summary: 'Cauã e Lucas - Empresa L',
+                    image: 'imagens_dicas/oleo-cozinha.png',
+                    video: 'https://www.youtube.com/embed/PONTO-FINAL-DO-VIDEO-DE-CADA-UM'
+                },
+                {
+                    material: 'Pneus',
+                    summary: 'Valentine e Laura - Empresa V',
+                    image: 'imagens_dicas/pneus.png',
+                    video: 'https://youtube.com/embed/0pBsH2ErLHY'
+                },
+                {
+                    material: 'Fios e Cabos Elétricos',
+                    summary: 'Davi - Empresa F',
+                    image: 'imagens_dicas/fios-cabos.png',
+                    video: 'https://www.youtube.com/embed/PONTO-FINAL-DO-VIDEO-DE-CADA-UM'
+                },
+                {
+                    material: 'Peças de Carro (Sucata)',
+                    summary: 'Rayhan - Empresa R',
+                    image: 'imagens_dicas/pecas-carro.png',
+                    video: 'https://www.youtube.com/embed/PONTO-FINAL-DO-VIDEO-DE-CADA-UM'
+                }
+            ];
+
+            // Função para criar o cartão de dica
+            function createTipCard(tip) {
+                const tipCard = document.createElement('div');
+                tipCard.classList.add('tip-card');
+                tipCard.innerHTML = `
+                    <img src="${tip.image}" alt="Ícone de ${tip.material}">
+                    <h3>${tip.material}</h3>
+                    <p>${tip.summary}</p>
+                    <p class="read-more-prompt">Clique para saber mais</p>
+                `;
+
+                tipCard.addEventListener('click', () => {
+                    modalTitle.textContent = tip.material;
+                    modalPlayer.src = tip.video;
+                    modalDescription.innerHTML = ''; // Limpa os detalhes
+                    detailModal.classList.add('show');
+                });
+                return tipCard;
+            }
+
+            // Popula a seção de dicas
+            tipsData.forEach(tip => {
+                tipsContent.appendChild(createTipCard(tip));
+            });
+
+            // Lógica para fechar o modal
+            detailModalClose.addEventListener('click', () => {
+                modalPlayer.src = '';
+                detailModal.classList.remove('show');
+            });
+
+            detailModal.addEventListener('click', (event) => {
+                if (event.target === detailModal) {
+                    modalPlayer.src = '';
+                    detailModal.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
